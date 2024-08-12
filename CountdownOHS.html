@@ -1,0 +1,107 @@
+<html>
+<head>
+<style>
+body {
+    background-color: #c20d00;
+}
+p {
+    font-family: "Courier New";
+    color: white;
+    font-size: 40pt;
+    text-align: center;
+    left: 0;
+    line-height: 200px;
+    margin-top: -100px;
+    position: absolute;
+    text-align: center;
+    top: 50%;
+    width: 100%;
+}
+h1 {
+    font-family: "Verdana";
+    white-space: nowrap;
+    color: white;
+    font-family: sans-serif;
+    text-align: center;
+    left: 0;
+    line-height: 200px;
+    margin-top: -100px;
+    position: absolute;
+    text-align: center;
+    top: 40%;
+    width: 100%;
+}
+div {
+    white-space: nowrap;
+    display: inline;
+    color: beige;
+}
+</style>
+</head>
+<body>
+<h1>Time until <div>Labor Day</div></h1>
+<p id="demo"></p>
+
+<!-- Credit to @catdad on github -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+<script>
+//countdown date
+var countDownDate = new Date("Sep 9, 2024 00:00:00").getTime();
+
+function updateCountdown() {
+    //today
+    var now = new Date().getTime();
+
+    //distance
+    var distance = countDownDate - now;
+
+    //hms conversions
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    //show in "demo"
+    document.getElementById("demo").innerHTML = days + "d " + hours + "h "
+    + minutes + "m " + seconds + "s ";
+
+    //check if countdown is finished
+    if (distance < 0) {
+        clearInterval(x);
+        document.getElementById("demo").innerHTML = "0d 0h 0m 0s";
+
+        //to trigger right after
+        let confettiInterval = 1000; //time between bursts
+        let confettiBursts = 10000; //num of bursts
+
+        function triggerConfetti() {
+            confetti({
+                particleCount: 200,
+                spread: 360,
+                angle: 360,
+                startVelocity: 20,
+                origin: {
+                    x: Math.random(), 
+                    y: Math.random()    
+                },
+                gravity: 0.5
+            });
+        }
+
+        //trigger in sequence
+        for (let i = 0; i < confettiBursts; i++) {
+            setTimeout(triggerConfetti, confettiInterval * i);
+        }
+    }
+}
+
+//update immeadiately
+updateCountdown();
+
+//then every 1s
+var x = setInterval(updateCountdown, 1000);
+</script>
+</body>
+</html>
+
