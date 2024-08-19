@@ -1,12 +1,11 @@
 <html>
 <head>
-    <title>Next Break From School</title>
-    <link rel="icon" type="image/x-icon" href="https://www.clipartmax.com/png/middle/335-3353328_stanford-cardinal-stanford-university-mascot-logo.png">
+<link rel="icon" type="image/x-icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHYeG5U5NmxUUo1ZRcV3W6ETMk3WGecl64YA&s">
 <style>
 body {
     background-color: #c20d00;
 }
-p {
+#demo {
     font-family: "Courier New";
     color: white;
     font-size: 40pt;
@@ -17,6 +16,19 @@ p {
     position: absolute;
     text-align: center;
     top: 50%;
+    width: 100%;
+}
+#percent {
+    font-family: "Verdana";
+    color: white;
+    font-size: 15pt;
+    text-align: center;
+    left: 0;
+    line-height: 200px;
+    margin-top: -100px;
+    position: absolute;
+    text-align: center;
+    top: 60%;
     width: 100%;
 }
 h1 {
@@ -34,6 +46,7 @@ h1 {
     width: 100%;
 }
 div {
+    font-family: "Courier New";
     white-space: nowrap;
     display: inline;
     color: beige;
@@ -43,6 +56,7 @@ div {
 <body>
 <h1>Time until <div>Labor Day</div></h1>
 <p id="demo"></p>
+<p id="percent"></p>
 
 <!-- Credit to @catdad on github -->
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
@@ -50,6 +64,8 @@ div {
 <script>
 //countdown date
 var countDownDate = new Date("Sep 9, 2024 00:00:00").getTime();
+var endOfSchool = new Date("May 30, 2025 23:59:59").getTime();
+var startOfSchool = new Date("Aug 19, 2024 06:00:00").getTime();
 
 function updateCountdown() {
     //today
@@ -57,6 +73,14 @@ function updateCountdown() {
 
     //distance
     var distance = countDownDate - now;
+    
+    //time til end of school
+    var timeTilEnd = endOfSchool - now;
+    var secondsInSchoolYear = Math.floor((endOfSchool-startOfSchool) / 1000);
+    var secondsTilEndOfSchool = Math.floor(timeTilEnd / 1000);
+    var secondsPassed = secondsInSchoolYear - secondsTilEndOfSchool;
+    var percentage = (secondsPassed / secondsInSchoolYear) * 100;
+    console.log(percentage.toFixed(2));
 
     //hms conversions
     var days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -67,6 +91,7 @@ function updateCountdown() {
     //show in "demo"
     document.getElementById("demo").innerHTML = days + "d " + hours + "h "
     + minutes + "m " + seconds + "s ";
+    document.getElementById("percent").innerHTML = "<div>" + percentage.toFixed(2) + "%</div>" + " through the school year"
 
     //check if countdown is finished
     if (distance < 0) {
@@ -106,4 +131,5 @@ var x = setInterval(updateCountdown, 1000);
 </script>
 </body>
 </html>
+
 
